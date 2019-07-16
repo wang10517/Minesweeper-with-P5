@@ -2,9 +2,14 @@
 var board = [] ; 
 var boardWidth = 20;
 var img ;
+
+function preload() {
+  img = loadImage('flag.png');
+}
+
+
 function setup() {
   createCanvas(1001, 1001);
-  img = loadImage('./flag.png');
   board =  initializeBoard(boardWidth, 1000);
   updateInfo(boardWidth);
 }
@@ -61,7 +66,7 @@ function mousePressed() {
 		        	board[i][j].revealed = true;
     			}else if (mouseButton == RIGHT) {
     				let cell = board[i][j];
-    				image(img, cell.physicalX + cell.width/2, cell.physicalY + cell.width/2)
+    				image(img, cell.physicalX , cell.physicalY , cell.width, cell.width)
     			}
 		      }
 		  
@@ -71,18 +76,26 @@ function mousePressed() {
 }
 
 function updateCanvas() {
+	let count = 0; 
 	for(let i = 0 ; i < boardWidth ; i ++){
 	    for (let j = 0 ; j < boardWidth ; j++){
 	    	let cur_cell = board[i][j]
 	    	cur_cell.draw();
 	    	if ( cur_cell.revealed) {
+	    		count = count + 1; 
 	    		cur_cell.reveal();
 	    	}
 	    }
 	  }
+
+	 return count; 
 }
 
 
 function draw() {
-	updateCanvas();
+	let counter = updateCanvas();
+	if ( counter == boardWidth*boardWidth ) {
+		board[0][0].gameOver(true);
+	}
+	
 }

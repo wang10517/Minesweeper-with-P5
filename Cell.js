@@ -12,7 +12,14 @@ class Cell {
     this.neighbors = [];
   }
 
-  gameOver(){
+  gameOver(win){
+    if ( win) {
+      alert('Congradulation, you win !');
+      remove()
+    }else {
+      alert('Sorry, you bumped into a mine');
+      remove()
+    }
   }
 
   reveal(){
@@ -20,7 +27,7 @@ class Cell {
       stroke(0);
       fill(127);
       circle(this.physicalX + this.width/2 ,this.physicalY +  this.width/2, this.width/4);
-      this.gameOver();
+      this.gameOver(false);
 
     }else{
       stroke(0);
